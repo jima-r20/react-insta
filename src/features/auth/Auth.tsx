@@ -23,7 +23,6 @@ import {
   fetchAsyncGetProfs,
   fetchAsyncCreateProf,
 } from './authSlice';
-import { executionAsyncId } from 'async_hooks';
 
 const customStyles = {
   overlay: {
@@ -62,6 +61,7 @@ const Auth: React.FC = () => {
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values) => {
             await dispatch(fetchCredStart());
+            console.log(values);
             const resultReg = await dispatch(fetchAsyncRegister(values));
 
             if (fetchAsyncRegister.fulfilled.match(resultReg)) {
@@ -110,20 +110,19 @@ const Auth: React.FC = () => {
                     onBlur={handleBlur}
                     value={values.email}
                   />
-                  <br />
                   {touched.email && errors.email ? (
                     <div className={styles.auth_error}>{errors.email}</div>
                   ) : null}
+                  <br />
 
                   <TextField
                     placeholder="password"
-                    type="input"
+                    type="password"
                     name="password"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
                   />
-                  <br />
                   {touched.password && errors.password ? (
                     <div className={styles.auth_error}>{errors.password}</div>
                   ) : null}
@@ -219,7 +218,7 @@ const Auth: React.FC = () => {
 
                   <TextField
                     placeholder="password"
-                    type="input"
+                    type="password"
                     name="password"
                     onChange={handleChange}
                     onBlur={handleBlur}
