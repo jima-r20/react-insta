@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import axios from 'axios';
 import { PROPS_NEWPOST, PROPS_LIKED, PROPS_COMMENT } from '../types';
-import { create } from 'domain';
 
 const apiUrlPost = `${process.env.REACT_APP_DEV_API_URL}api/post/`;
 const apiUrlComment = `${process.env.REACT_APP_DEV_API_URL}api/comment/`;
@@ -131,9 +130,41 @@ export const postSlice = createSlice({
       state.openNewPost = false;
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchAsyncGetPosts.fulfilled, (state, action) => {
+      return { ...state, post: action.payload };
+    });
+    builder.addCase(fetchAsyncNewPost.fulfilled, (state, action) => {
+      return { ...state, posts: [...state.posts, action.payload] };
+    });
+    builder.addCase(fetchAsyncGetComments.fulfilled, (state, action) => {
+      return { ...state, comments: action.payload };
+    });
+    builder.addCase(fetchAsyncPostComment.fulfilled, (state, action) => {
+      return { ...state, comments: [...state.comments, action.payload] };
+    });
+    builder.addCase(fetchAsyncPatchLiked.fulfilled, (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post.id === action.payload.id ? action.payload : post
+        ),
+      };
+    });
+  },
 });
 
-export const {} = postSlice.actions;
+export const {
+  fetchPostStart,
+  fetchPostEnd,
+  setOpneNewPost,
+  resetOpenNewPost,
+} = postSlice.actions;
+
+export const selectIsLoadingPost = (state: RootState) =>
+  state.post.isLoadingPost;
+export const selectOpenNewPost = (state: RootState) => state.post.openNewPost;
+export const selectPosts = (state: RootState) => state.post.posts;
+export const selectComments = (state: RootState) => state.post.comments;
 
 export default postSlice.reducer;
