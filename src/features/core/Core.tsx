@@ -94,6 +94,37 @@ const Core: React.FC = () => {
   return (
     <div>
       <Auth />
+      <div className={styles.core_header}>
+        <h1 className={styles.core_title}>SNS clone</h1>
+        {profile?.nickName ? (
+          <React.Fragment>
+            <button
+              className={styles.core_btnModal}
+              onClick={() => {
+                dispatch(setOpneNewPost());
+                dispatch(resetOpenProfile());
+              }}
+            >
+              <MdAddAPhoto />
+            </button>
+            <div className={styles.core_logout}>
+              <Button
+                onClick={() => {
+                  localStorage.removeItem('localJWT');
+                  dispatch(editNickName(''));
+                  dispatch(resetOpenProfile());
+                  dispatch(resetOpenNewPost());
+                  dispatch(setOpenSignIn());
+                }}
+              >
+                Logout
+              </Button>
+            </div>
+          </React.Fragment>
+        ) : (
+          <div></div>
+        )}
+      </div>
     </div>
   );
 };
