@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Auth from '../auth/Auth';
+import Post from '../post/Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 

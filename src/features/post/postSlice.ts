@@ -111,7 +111,7 @@ export const postSlice = createSlice({
       {
         id: 0,
         text: '',
-        usetComment: 0,
+        userComment: 0,
         post: 0,
       },
     ],
@@ -132,7 +132,7 @@ export const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAsyncGetPosts.fulfilled, (state, action) => {
-      return { ...state, post: action.payload };
+      return { ...state, posts: action.payload };
     });
     builder.addCase(fetchAsyncNewPost.fulfilled, (state, action) => {
       return { ...state, posts: [...state.posts, action.payload] };
