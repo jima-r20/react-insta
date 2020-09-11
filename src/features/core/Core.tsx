@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import Auth from '../auth/Auth';
 import Post from '../post/Post';
+import EditProfile from './EditProfile';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 
@@ -95,6 +96,7 @@ const Core: React.FC = () => {
   return (
     <div>
       <Auth />
+      <EditProfile />
       <div className={styles.core_header}>
         <h1 className={styles.core_title}>SNS clone</h1>
         {profile?.nickName ? (
